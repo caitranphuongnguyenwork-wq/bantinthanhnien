@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bio Link Của Tôi</title>
+    <style>
+        /* CSS để chèn ảnh Canva làm hình nền */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            /* Thay link ảnh dưới đây bằng link ảnh bạn tải về từ Canva */
+            background-image: url('link-anh-canva-cua-ban.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Khung chứa nội dung động */
+        .dynamic-box {
+            background: rgba(255, 255, 255, 0.85); /* Nền trắng hơi trong suốt để thấy ảnh Canva mờ mờ */
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-top: 50px;
+            max-width: 90%;
+            width: 400px;
+        }
+
+        #date-display {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        #quote-display {
+            font-size: 1.1em;
+            font-style: italic;
+            color: #e74c3c;
+            line-height: 1.5;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dynamic-box">
+        <div id="date-display">Đang tải ngày tháng...</div>
+        <div id="quote-display">Đang tải câu nói động lực...</div>
+    </div>
+
+    <script>
+        // 1. Cập nhật ngày tháng năm
+        const d = new Date();
+        const daysOfWeek = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
+        
+        const dayName = daysOfWeek[d.getDay()];
+        const date = d.getDate();
+        const month = d.getMonth() + 1;
+        const year = d.getFullYear();
+
+        document.getElementById('date-display').innerText = `${dayName}, ngày ${date}/${month}/${year}`;
+
+        // 2. Danh sách các câu nói tích cực (Thay đổi theo ngày trong tuần)
+        const positiveQuotes = [
+            "Nghỉ ngơi trọn vẹn để nạp năng lượng, sẵn sàng cho những mục tiêu phía trước nhé! 🌿", // Chủ nhật (Index 0)
+            "Hành trình ngàn dặm bắt đầu từ một bước chân. Kiên trì với mục tiêu của mình nhé! 🚀", // Thứ hai (Index 1)
+            "Trẻ em như búp trên cành. Chúc bạn một ngày tràn đầy năng lượng và tình yêu thương! 🌻", // Thứ ba (Index 2)
+            "Kiến thức là nền tảng, phương pháp là chìa khóa. Chúc bạn một ngày học tập thật hiệu quả! 📚", // Thứ tư (Index 3)
+            "Practice makes perfect! Mỗi ngày một chút nỗ lực sẽ mang lại kết quả lớn. 🎯", // Thứ năm (Index 4)
+            "Kỷ luật là cầu nối giữa mục tiêu và thành tựu. Hãy duy trì những thói quen tốt nhé! 💪", // Thứ sáu (Index 5)
+            "Cuối tuần rồi, hãy dành chút thời gian nhìn lại những tiến bộ của bản thân trong tuần qua. ✨" // Thứ bảy (Index 6)
+        ];
+
+        // Lấy câu nói tương ứng với ngày hiện tại (d.getDay() trả về từ 0 đến 6)
+        const todaysQuote = positiveQuotes[d.getDay()];
+        
+        document.getElementById('quote-display').innerText = `"${todaysQuote}"`;
+    </script>
+
+</body>
+</html>
