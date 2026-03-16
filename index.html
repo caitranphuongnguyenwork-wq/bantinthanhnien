@@ -3,90 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bio Link Của Tôi</title>
+    <title>Bio Link</title>
     <style>
-        /* CSS để chèn ảnh Canva làm hình nền */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            /* Thay link ảnh dưới đây bằng link ảnh bạn tải về từ Canva */
-            background-image: url('link-anh-canva-cua-ban.jpg'); 
+            /* Đảm bảo bạn đã upload file thiết kế từ Canva lên GitHub và đổi tên thành anh-nen.png */
+            background-image: url('anh-nen.png'); 
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center; /* Giúp hộp nội dung nằm giữa màn hình */
             min-height: 100vh;
             color: #333;
         }
 
-        /* Khung chứa nội dung động */
         .dynamic-box {
-            background: rgba(255, 255, 255, 0.85); /* Nền trắng hơi trong suốt để thấy ảnh Canva mờ mờ */
-            padding: 20px 30px;
+            background: rgba(255, 255, 255, 0.92); /* Làm nền trắng đục hơn một chút để chữ dễ đọc trên nền Canva */
+            padding: 25px 35px;
             border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
             text-align: center;
-            margin-top: 50px;
             max-width: 90%;
-            width: 400px;
+            width: 420px;
+        }
+
+        #time-display {
+            font-size: 2.8em;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
         }
 
         #date-display {
             font-size: 1.1em;
             font-weight: bold;
             color: #2c3e50;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             border-bottom: 2px solid #3498db;
-            padding-bottom: 5px;
+            padding-bottom: 10px;
             display: inline-block;
         }
 
         #quote-display {
             font-size: 1.1em;
             font-style: italic;
-            color: #e74c3c;
-            line-height: 1.5;
-            margin-top: 15px;
+            color: #555;
+            line-height: 1.6;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
     <div class="dynamic-box">
+        <div id="time-display">00:00:00</div>
         <div id="date-display">Đang tải ngày tháng...</div>
         <div id="quote-display">Đang tải câu nói động lực...</div>
     </div>
 
     <script>
-        // 1. Cập nhật ngày tháng năm
-        const d = new Date();
-        const daysOfWeek = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
+        // Hàm cập nhật đồng hồ (chạy liên tục mỗi giây)
+        function updateClock() {
+            const d = new Date();
+            let hours = d.getHours();
+            let minutes = d.getMinutes();
+            let seconds = d.getSeconds();
+            
+            // Thêm số 0 đằng trước nếu số nhỏ hơn 10 để form đồng hồ luôn đẹp (ví dụ: 09:05:02)
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            document.getElementById('time-display').innerText = `${hours}:${minutes}:${seconds}`;
+        }
+
+        // Hàm cập nhật ngày tháng và câu nói (chỉ chạy 1 lần khi load trang)
+        function updateDateAndQuote() {
+            const d = new Date();
+            const daysOfWeek = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
+            
+            const dayName = daysOfWeek[d.getDay()];
+            const date = d.getDate();
+            const month = d.getMonth() + 1;
+            const year = d.getFullYear();
+
+            document.getElementById('date-display').innerText = `${dayName}, ngày ${date}/${month}/${year}`;
+
+            // Danh sách câu nói động lực thay đổi theo ngày
+            const positiveQuotes = [
+                "Cuối tuần thư giãn trọn vẹn nhé! Nạp lại năng lượng để sẵn sàng cho những mục tiêu phía trước. 🌿",
+                "Khởi đầu tuần mới đầy hứng khởi! Từng bước nhỏ kiên trì sẽ dẫn đến kết quả lớn, dù là trên giảng đường hay hành trình rèn luyện bản thân. 🚀",
+                "Mỗi đứa trẻ là một thế giới riêng. Áp dụng những nguyên lý tâm lý học vào thực tiễn sẽ giúp tạo ra những giờ học tuyệt vời! 🌻",
+                "Duy trì thói quen ăn uống thanh đạm, ít dầu mỡ và vận động đều đặn. Sức khỏe tốt là nền tảng vững chắc nhất cho mọi thành công! 🥗💪",
+                "Keep pushing forward! Mỗi giờ rèn luyện ngoại ngữ hôm nay là một bước tiến gần hơn đến con số 900+ vững chắc. 🎯",
+                "Tri thức giáo dục tiểu học không chỉ nằm trong sách vở mà còn ở sự thấu hiểu. Chúc bạn có những giờ học phương pháp sư phạm thật hiệu quả! 📚",
+                "Một tuần nỗ lực đã qua. Hãy tự thưởng cho mình một buổi tối thảnh thơi và nhìn lại những tiến bộ của bản thân nhé! ✨"
+            ];
+
+            document.getElementById('quote-display').innerText = `"${positiveQuotes[d.getDay()]}"`;
+        }
+
+        // Kích hoạt hàm ngay khi mở web
+        updateDateAndQuote();
+        updateClock();
         
-        const dayName = daysOfWeek[d.getDay()];
-        const date = d.getDate();
-        const month = d.getMonth() + 1;
-        const year = d.getFullYear();
-
-        document.getElementById('date-display').innerText = `${dayName}, ngày ${date}/${month}/${year}`;
-
-        // 2. Danh sách các câu nói tích cực (Thay đổi theo ngày trong tuần)
-        const positiveQuotes = [
-            "Nghỉ ngơi trọn vẹn để nạp năng lượng, sẵn sàng cho những mục tiêu phía trước nhé! 🌿", // Chủ nhật (Index 0)
-            "Hành trình ngàn dặm bắt đầu từ một bước chân. Kiên trì với mục tiêu của mình nhé! 🚀", // Thứ hai (Index 1)
-            "Trẻ em như búp trên cành. Chúc bạn một ngày tràn đầy năng lượng và tình yêu thương! 🌻", // Thứ ba (Index 2)
-            "Kiến thức là nền tảng, phương pháp là chìa khóa. Chúc bạn một ngày học tập thật hiệu quả! 📚", // Thứ tư (Index 3)
-            "Practice makes perfect! Mỗi ngày một chút nỗ lực sẽ mang lại kết quả lớn. 🎯", // Thứ năm (Index 4)
-            "Kỷ luật là cầu nối giữa mục tiêu và thành tựu. Hãy duy trì những thói quen tốt nhé! 💪", // Thứ sáu (Index 5)
-            "Cuối tuần rồi, hãy dành chút thời gian nhìn lại những tiến bộ của bản thân trong tuần qua. ✨" // Thứ bảy (Index 6)
-        ];
-
-        // Lấy câu nói tương ứng với ngày hiện tại (d.getDay() trả về từ 0 đến 6)
-        const todaysQuote = positiveQuotes[d.getDay()];
-        
-        document.getElementById('quote-display').innerText = `"${todaysQuote}"`;
+        // Cài đặt để đồng hồ nhảy số mỗi 1000 mili-giây (1 giây)
+        setInterval(updateClock, 1000);
     </script>
 
 </body>
